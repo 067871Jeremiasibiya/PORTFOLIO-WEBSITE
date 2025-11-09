@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather247 - Global Weather App</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="css/weather247.css">
+    <link rel="icon" href="data:,">
+    <style>
+        body {
+            background: linear-gradient(135deg, #f0f4f8 0%, #d9e2ec 100%);
+            min-height: 100vh;
+            padding: 20px 15px 40px;
+            color: #2d3748;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            background-attachment: fixed;
+        }
+        .back-to-portfolio {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="btn btn-primary back-to-portfolio">
+        <i class="fas fa-arrow-left me-2"></i>Back to Portfolio
+    </a>
+    
+    <div class="container">
+        <header class="text-center my-4">
+            <h1>Weather247</h1>
+            <p class="lead">Get real-time weather updates anywhere in the world</p>
+        </header>
+
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="search-container mb-4">
+                    <div class="input-group">
+                        <input type="text" id="city-input" class="form-control" placeholder="Enter city name...">
+                        <button id="search-btn" class="btn btn-primary">
+                            <i class="fas fa-search"></i> Search
+                        </button>
+                    </div>
+                </div>
+
+                <div id="weather-card" class="card d-none">
+                    <div class="card-body">
+                        <div class="current-weather">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h2 id="city-name" class="mb-0"></h2>
+                                <div id="current-time" class="text-muted"></div>
+                            </div>
+                            
+                            <div class="weather-main">
+                                <div class="d-flex align-items-center">
+                                    <div class="weather-icon">
+                                        <img id="weather-icon" src="" alt="Weather icon" class="img-fluid">
+                                    </div>
+                                    <div class="ms-3">
+                                        <div id="temperature" class="display-4 fw-bold"></div>
+                                        <div id="weather-description" class="text-capitalize"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="weather-details mt-4">
+                            <div class="row">
+                                <div class="col-6 col-md-4 mb-3">
+                                    <div class="detail-item">
+                                        <div class="detail-icon">
+                                            <i class="fas fa-temperature-high"></i>
+                                        </div>
+                                        <div class="detail-text">
+                                            <span class="detail-label">Feels Like</span>
+                                            <span id="feels-like" class="detail-value"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-4 mb-3">
+                                    <div class="detail-item">
+                                        <div class="detail-icon">
+                                            <i class="fas fa-tint"></i>
+                                        </div>
+                                        <div class="detail-text">
+                                            <span class="detail-label">Humidity</span>
+                                            <span id="humidity" class="detail-value"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-4 mb-3">
+                                    <div class="detail-item">
+                                        <div class="detail-icon">
+                                            <i class="fas fa-wind"></i>
+                                        </div>
+                                        <div class="detail-text">
+                                            <span class="detail-label">Wind Speed</span>
+                                            <span id="wind-speed" class="detail-value"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-4 mb-3">
+                                    <div class="detail-item">
+                                        <div class="detail-icon">
+                                            <i class="fas fa-compress-alt"></i>
+                                        </div>
+                                        <div class="detail-text">
+                                            <span class="detail-label">Pressure</span>
+                                            <span id="pressure" class="detail-value"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-4 mb-3">
+                                    <div class="detail-item">
+                                        <div class="detail-icon">
+                                            <i class="fas fa-eye"></i>
+                                        </div>
+                                        <div class="detail-text">
+                                            <span class="detail-label">Visibility</span>
+                                            <span id="visibility" class="detail-value"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-4 mb-3">
+                                    <div class="detail-item">
+                                        <div class="detail-icon">
+                                            <i class="fas fa-cloud"></i>
+                                        </div>
+                                        <div class="detail-text">
+                                            <span class="detail-label">Cloudiness</span>
+                                            <span id="cloudiness" class="detail-value"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="error-message" class="alert alert-danger mt-3 d-none" role="alert">
+                    Unable to fetch weather data. Please try again.
+                </div>
+            </div>
+        </div>
+
+        <div id="forecast" class="row mt-4 d-none">
+            <h3 class="text-center mb-3">5-Day Forecast</h3>
+            <div id="forecast-container" class="d-flex flex-wrap justify-content-center gap-3">
+                <!-- Forecast cards will be inserted here by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <footer class="text-center mt-5 py-3 text-muted">
+        <p>Weather data provided by <a href="https://openweathermap.org/" target="_blank">OpenWeatherMap</a></p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/weather247.js"></script>
+</body>
+</html>

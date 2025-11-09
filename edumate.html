@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduMate - Online Tutoring Platform</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="css/weather247.css">
+    <link rel="icon" href="data:,">
+    <style>
+        body {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            min-height: 100vh;
+            padding: 20px 15px 40px;
+            color: #2d3748;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            background-attachment: fixed;
+        }
+        .back-to-portfolio {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+        }
+        .app-screenshot {
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin: 20px 0;
+            max-width: 100%;
+            height: auto;
+        }
+        .feature-icon {
+            font-size: 2rem;
+            color: #0d6efd;
+            margin-bottom: 1rem;
+        }
+        .benefit-card {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            height: 100%;
+            transition: transform 0.3s ease;
+        }
+        .benefit-card:hover {
+            transform: translateY(-5px);
+        }
+        .cta-section {
+            background: linear-gradient(135deg, #4a6cf7 0%, #2541b2 100%);
+            color: white;
+            padding: 4rem 0;
+            border-radius: 10px;
+            margin: 4rem 0;
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="btn btn-primary back-to-portfolio">
+        <i class="fas fa-arrow-left me-2"></i>Back to Portfolio
+    </a>
+    
+    <div class="container">
+        <header class="text-center my-5">
+            <h1>EduMate</h1>
+            <p class="lead">Connecting students with expert tutors for personalized online learning experiences</p>
+            <a href="#get-started" class="btn btn-primary btn-lg mt-3">Get Started <i class="fas fa-arrow-right ms-2"></i></a>
+        </header>
+
+        <div class="row justify-content-center mb-5">
+            <div class="col-lg-10 text-center">
+                <img src="assets/pexels-artempodrez-6279105.jpg" alt="EduMate Platform Screenshot" class="img-fluid rounded shadow" style="max-height: 500px; width: auto; object-fit: contain;">
+                <p class="text-muted mt-2">EduMate Platform - Interactive Learning Interface</p>
+            </div>
+        </div>
+
+        <!-- How It Works -->
+        <section class="mb-5 py-4">
+            <h2 class="text-center mb-5">How EduMate Works</h2>
+            <div class="row g-4">
+                <div class="col-md-3 col-6">
+                    <div class="text-center p-3">
+                        <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center mx-auto mb-3" style="width: 60px; height: 60px;">
+                            <i class="fas fa-user-graduate fa-lg"></i>
+                        </div>
+                        <h5>1. Create Profile</h5>
+                        <p class="small">Sign up as a student or tutor</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="text-center p-3">
+                        <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center mx-auto mb-3" style="width: 60px; height: 60px;">
+                            <i class="fas fa-search fa-lg"></i>
+                        </div>
+                        <h5>2. Find Match</h5>
+                        <p class="small">Connect with the perfect tutor/student</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="text-center p-3">
+                        <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center mx-auto mb-3" style="width: 60px; height: 60px;">
+                            <i class="fas fa-video fa-lg"></i>
+                        </div>
+                        <h5>3. Start Learning</h5>
+                        <p class="small">Begin your lessons via video chat</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="text-center p-3">
+                        <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center mx-auto mb-3" style="width: 60px; height: 60px;">
+                            <i class="fas fa-chart-line fa-lg"></i>
+                        </div>
+                        <h5>4. Track Progress</h5>
+                        <p class="small">Monitor your learning journey</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Benefits -->
+        <section class="mb-5">
+            <h2 class="text-center mb-5">Why Choose EduMate?</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="benefit-card">
+                        <div class="text-center mb-3">
+                            <i class="fas fa-users feature-icon"></i>
+                        </div>
+                        <h4 class="text-center">Expert Tutors</h4>
+                        <p class="text-center">Learn from qualified and experienced tutors across various subjects and skill levels.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="benefit-card">
+                        <div class="text-center mb-3">
+                            <i class="fas fa-laptop feature-icon"></i>
+                        </div>
+                        <h4 class="text-center">Flexible Learning</h4>
+                        <p class="text-center">Schedule sessions at your convenience and learn from the comfort of your home.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="benefit-card">
+                        <div class="text-center mb-3">
+                            <i class="fas fa-chalkboard-teacher feature-icon"></i>
+                        </div>
+                        <h4 class="text-center">Personalized Approach</h4>
+                        <p class="text-center">Customized learning plans tailored to your specific needs and goals.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Subjects -->
+        <section class="mb-5">
+            <h2 class="text-center mb-5">Popular Subjects</h2>
+            <div class="row g-4">
+                <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+                    <div class="text-center p-3 bg-white rounded shadow-sm">
+                        <i class="fas fa-square-root-alt fa-2x text-primary mb-2"></i>
+                        <p class="mb-0">Mathematics</p>
+                    </div>
+                </div>
+                <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+                    <div class="text-center p-3 bg-white rounded shadow-sm">
+                        <i class="fas fa-atom fa-2x text-primary mb-2"></i>
+                        <p class="mb-0">Science</p>
+                    </div>
+                </div>
+                <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+                    <div class="text-center p-3 bg-white rounded shadow-sm">
+                        <i class="fas fa-language fa-2x text-primary mb-2"></i>
+                        <p class="mb-0">Languages</p>
+                    </div>
+                </div>
+                <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+                    <div class="text-center p-3 bg-white rounded shadow-sm">
+                        <i class="fas fa-laptop-code fa-2x text-primary mb-2"></i>
+                        <p class="mb-0">Programming</p>
+                    </div>
+                </div>
+                <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+                    <div class="text-center p-3 bg-white rounded shadow-sm">
+                        <i class="fas fa-palette fa-2x text-primary mb-2"></i>
+                        <p class="mb-0">Arts</p>
+                    </div>
+                </div>
+                <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+                    <div class="text-center p-3 bg-white rounded shadow-sm">
+                        <i class="fas fa-music fa-2x text-primary mb-2"></i>
+                        <p class="mb-0">Music</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section id="get-started" class="cta-section text-center">
+            <h2>Ready to Transform Your Learning Experience?</h2>
+            <p class="lead mb-4">Join thousands of students and tutors already using EduMate</p>
+            <div class="d-flex justify-content-center gap-3">
+                <a href="#" class="btn btn-light btn-lg">Find a Tutor</a>
+                <a href="#" class="btn btn-outline-light btn-lg">Become a Tutor</a>
+            </div>
+        </section>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
