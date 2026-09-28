@@ -381,25 +381,36 @@ img {
 
 .about-image {
   position: relative;
-  border-radius: 15px;
+  width: 320px;
+  height: 320px;
+  margin: 0 auto;
+  border-radius: 50%;
   overflow: hidden;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.18);
   transition: var(--transition);
+  flex-shrink: 0;
 }
 
 .about-image:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15);
+  transform: translateY(-8px);
+  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.2);
 }
 
-.about-image img {
+.about-image img,
+.about-photo {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: none !important;
+  object-fit: cover !important;
+  object-position: center center !important;
+  border-radius: 50%;
   transition: var(--transition);
-  width: 100%;
-  height: auto;
 }
 
-.about-image:hover img {
-  transform: scale(1.05);
+.about-image:hover img,
+.about-image:hover .about-photo {
+  transform: scale(1.04);
 }
 
 .skills {
@@ -615,7 +626,18 @@ textarea.form-control {
   }
   
   .about-image {
-    margin-bottom: 2rem;
+    margin: 0 auto 2rem;
+    width: 260px;
+    height: 260px;
+  }
+
+  .about-content {
+    text-align: center;
+  }
+
+  .about-content .skills,
+  .about-content .social-links {
+    justify-content: center;
   }
 }
 
@@ -782,10 +804,13 @@ textarea.form-control {
  }
 
  .logo-img {
-    height: 50px;
-    width: 50px;
+    height: 48px !important;
+    width: 48px !important;
     border-radius: 50%;
     object-fit: cover;
+    object-position: center center;
+    display: block;
+    flex-shrink: 0;
     transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
@@ -793,9 +818,15 @@ textarea.form-control {
     padding: 5px 0;
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 10px;
     font-weight: 600;
     letter-spacing: 0.5px;
+    margin-right: 0;
+}
+
+.navbar-brand .brand-text {
+    line-height: 1;
 }
 
 .navbar-brand:hover .logo-img {
@@ -803,13 +834,20 @@ textarea.form-control {
     opacity: 0.9;
 }
 
-.navbar-brand span {
+.navbar-brand span,
+.navbar-brand .brand-text {
     color: #fff;
     transition: color 0.3s ease;
 }
 
-.navbar-brand:hover span {
+.navbar-brand:hover span,
+.navbar-brand:hover .brand-text {
     color: #99007f;
+}
+
+.navbar-actions {
+  min-width: 160px;
+  justify-content: flex-end;
 }
 
 /* Download Button Styles */
