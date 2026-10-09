@@ -26,20 +26,49 @@ document.addEventListener('DOMContentLoaded', function () {
         return window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
     }
 
-    function onScrollOrTouch() {
-        if (backToTopButton) {
-            if (getScrollY() > 300) {
-                backToTopButton.classList.add('active');
-            } else {
-                backToTopButton.classList.remove('active');
-            }
-        }
+    let lastScrollY = getScrollY();
+    let ignoreScrollCloseUntil = 0;
 
-        closeNavbarIfOpen();
+    // Opening the menu mid-page can nudge scroll/layout — don't treat that as "user scrolled"
+    if (navbarToggler) {
+        navbarToggler.addEventListener('click', function () {
+            ignoreScrollCloseUntil = Date.now() + 400;
+            lastScrollY = getScrollY();
+        });
     }
 
-    window.addEventListener('scroll', onScrollOrTouch, { passive: true });
-    document.addEventListener('touchmove', onScrollOrTouch, { passive: true });
+    if (navbarCollapse) {
+        navbarCollapse.addEventListener('shown.bs.collapse', function () {
+            ignoreScrollCloseUntil = Date.now() + 400;
+            lastScrollY = getScrollY();
+        });
+    }
+
+    window.addEventListener(
+        'scroll',
+        function () {
+            const scrollY = getScrollY();
+
+            if (backToTopButton) {
+                if (scrollY > 300) {
+                    backToTopButton.classList.add('active');
+                } else {
+                    backToTopButton.classList.remove('active');
+                }
+            }
+
+            const delta = Math.abs(scrollY - lastScrollY);
+            lastScrollY = scrollY;
+
+            // Only close after a real scroll gesture, not tiny layout shifts
+            if (Date.now() < ignoreScrollCloseUntil || delta < 20) {
+                return;
+            }
+
+            closeNavbarIfOpen();
+        },
+        { passive: true }
+    );
 
     // Close mobile navbar when tapping/clicking outside it
     document.addEventListener('click', function (e) {
