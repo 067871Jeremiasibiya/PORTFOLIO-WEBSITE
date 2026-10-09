@@ -519,6 +519,19 @@ img {
   transform: none !important;
 }
 
+/* btn-outline-light is for dark hero/footer — on white cards it was invisible until hover */
+.project-links .btn-outline-light {
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+  background-color: rgba(153, 0, 127, 0.06);
+}
+
+.project-links .btn-outline-light:hover {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  color: #fff;
+}
+
 /* Contact Section */
 .contact {
   background-color: #f8f9fa;
