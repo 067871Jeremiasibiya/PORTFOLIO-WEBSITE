@@ -2,13 +2,15 @@ document.addEventListener('DOMContentLoaded', function () {
     const backToTopButton = document.querySelector('.back-to-top');
     const navbarCollapse = document.getElementById('navbarNav');
     const navbarToggler = document.querySelector('.navbar-toggler');
+    const header = document.querySelector('header');
+
+    let ignoreOutsideClickUntil = 0;
 
     function closeNavbarIfOpen() {
         if (!navbarCollapse || !navbarCollapse.classList.contains('show')) {
             return;
         }
 
-        // Prefer clicking the toggler — most reliable with Bootstrap on mobile
         if (navbarToggler && navbarToggler.getAttribute('aria-expanded') === 'true') {
             navbarToggler.click();
             return;
@@ -26,57 +28,47 @@ document.addEventListener('DOMContentLoaded', function () {
         return window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
     }
 
-    let lastScrollY = getScrollY();
-    let ignoreScrollCloseUntil = 0;
+    // Back-to-top visibility only — do NOT close the menu on scroll
+    // (opening mid-page causes layout scroll and was closing it immediately)
+    window.addEventListener(
+        'scroll',
+        function () {
+            if (!backToTopButton) {
+                return;
+            }
 
-    // Opening the menu mid-page can nudge scroll/layout — don't treat that as "user scrolled"
+            if (getScrollY() > 300) {
+                backToTopButton.classList.add('active');
+            } else {
+                backToTopButton.classList.remove('active');
+            }
+        },
+        { passive: true }
+    );
+
     if (navbarToggler) {
         navbarToggler.addEventListener('click', function () {
-            ignoreScrollCloseUntil = Date.now() + 400;
-            lastScrollY = getScrollY();
+            // Ignore the follow-up / ghost click that lands on page content after open
+            ignoreOutsideClickUntil = Date.now() + 500;
         });
     }
 
     if (navbarCollapse) {
         navbarCollapse.addEventListener('shown.bs.collapse', function () {
-            ignoreScrollCloseUntil = Date.now() + 400;
-            lastScrollY = getScrollY();
+            ignoreOutsideClickUntil = Date.now() + 500;
         });
     }
 
-    window.addEventListener(
-        'scroll',
-        function () {
-            const scrollY = getScrollY();
-
-            if (backToTopButton) {
-                if (scrollY > 300) {
-                    backToTopButton.classList.add('active');
-                } else {
-                    backToTopButton.classList.remove('active');
-                }
-            }
-
-            const delta = Math.abs(scrollY - lastScrollY);
-            lastScrollY = scrollY;
-
-            // Only close after a real scroll gesture, not tiny layout shifts
-            if (Date.now() < ignoreScrollCloseUntil || delta < 20) {
-                return;
-            }
-
-            closeNavbarIfOpen();
-        },
-        { passive: true }
-    );
-
-    // Close mobile navbar when tapping/clicking outside it
+    // Close when tapping/clicking outside the header
     document.addEventListener('click', function (e) {
         if (!navbarCollapse || !navbarCollapse.classList.contains('show')) {
             return;
         }
 
-        const header = document.querySelector('header');
+        if (Date.now() < ignoreOutsideClickUntil) {
+            return;
+        }
+
         if (header && header.contains(e.target)) {
             return;
         }
