@@ -41,6 +41,20 @@ document.addEventListener('DOMContentLoaded', function () {
     window.addEventListener('scroll', onScrollOrTouch, { passive: true });
     document.addEventListener('touchmove', onScrollOrTouch, { passive: true });
 
+    // Close mobile navbar when tapping/clicking outside it
+    document.addEventListener('click', function (e) {
+        if (!navbarCollapse || !navbarCollapse.classList.contains('show')) {
+            return;
+        }
+
+        const header = document.querySelector('header');
+        if (header && header.contains(e.target)) {
+            return;
+        }
+
+        closeNavbarIfOpen();
+    });
+
     if (backToTopButton) {
         backToTopButton.addEventListener('click', function (e) {
             e.preventDefault();
