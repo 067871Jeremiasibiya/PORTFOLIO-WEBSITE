@@ -2,34 +2,41 @@ document.addEventListener('DOMContentLoaded', function () {
     const backToTopButton = document.querySelector('.back-to-top');
     const navbarCollapse = document.getElementById('navbarNav');
     const navbarToggler = document.querySelector('.navbar-toggler');
-    const header = document.querySelector('header');
 
-    let ignoreOutsideClickUntil = 0;
+    // Blocks outside-close while the menu is opening (stops the curtain snap-shut)
+    let suppressOutsideClose = false;
+    let suppressTimer = null;
 
-    function closeNavbarIfOpen() {
+    function armOutsideCloseSuppress(ms) {
+        suppressOutsideClose = true;
+        clearTimeout(suppressTimer);
+        suppressTimer = setTimeout(function () {
+            suppressOutsideClose = false;
+        }, ms);
+    }
+
+    function hideNavbar() {
         if (!navbarCollapse || !navbarCollapse.classList.contains('show')) {
             return;
         }
 
-        if (navbarToggler && navbarToggler.getAttribute('aria-expanded') === 'true') {
-            navbarToggler.click();
+        if (typeof bootstrap === 'undefined') {
+            navbarCollapse.classList.remove('show');
+            if (navbarToggler) {
+                navbarToggler.setAttribute('aria-expanded', 'false');
+            }
             return;
         }
 
-        if (typeof bootstrap !== 'undefined') {
-            const instance =
-                bootstrap.Collapse.getInstance(navbarCollapse) ||
-                new bootstrap.Collapse(navbarCollapse, { toggle: false });
-            instance.hide();
-        }
+        // Never use toggler.click() — it races with open and causes open-then-close
+        bootstrap.Collapse.getOrCreateInstance(navbarCollapse, { toggle: false }).hide();
     }
 
     function getScrollY() {
         return window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
     }
 
-    // Back-to-top visibility only — do NOT close the menu on scroll
-    // (opening mid-page causes layout scroll and was closing it immediately)
+    // Back-to-top arrow only — scrolling must NOT close the menu
     window.addEventListener(
         'scroll',
         function () {
@@ -47,40 +54,47 @@ document.addEventListener('DOMContentLoaded', function () {
     );
 
     if (navbarToggler) {
-        navbarToggler.addEventListener('click', function () {
-            // Ignore the follow-up / ghost click that lands on page content after open
-            ignoreOutsideClickUntil = Date.now() + 500;
-        });
+        // Capture phase: arm suppress BEFORE Bootstrap's document click handler
+        navbarToggler.addEventListener(
+            'click',
+            function () {
+                armOutsideCloseSuppress(800);
+            },
+            true
+        );
     }
 
     if (navbarCollapse) {
+        navbarCollapse.addEventListener('show.bs.collapse', function () {
+            armOutsideCloseSuppress(800);
+        });
         navbarCollapse.addEventListener('shown.bs.collapse', function () {
-            ignoreOutsideClickUntil = Date.now() + 500;
+            armOutsideCloseSuppress(400);
         });
     }
 
-    // Close when tapping/clicking outside the header
+    // Close only on a real outside tap/click — not the same gesture that opened it
     document.addEventListener('click', function (e) {
+        if (suppressOutsideClose) {
+            return;
+        }
+
         if (!navbarCollapse || !navbarCollapse.classList.contains('show')) {
             return;
         }
 
-        if (Date.now() < ignoreOutsideClickUntil) {
+        if (e.target.closest('header')) {
             return;
         }
 
-        if (header && header.contains(e.target)) {
-            return;
-        }
-
-        closeNavbarIfOpen();
+        hideNavbar();
     });
 
     if (backToTopButton) {
         backToTopButton.addEventListener('click', function (e) {
             e.preventDefault();
             window.scrollTo({ top: 0, behavior: 'smooth' });
-            closeNavbarIfOpen();
+            hideNavbar();
         });
     }
 
@@ -101,11 +115,11 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             e.preventDefault();
+            hideNavbar();
             window.scrollTo({
                 top: targetElement.offsetTop - 80,
                 behavior: 'smooth'
             });
-            closeNavbarIfOpen();
         });
     });
 
