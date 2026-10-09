@@ -2,15 +2,28 @@ document.addEventListener('DOMContentLoaded', function() {
     // Back to top button functionality
     const backToTopButton = document.querySelector('.back-to-top');
 
-    if (backToTopButton) {
-        window.addEventListener('scroll', function() {
+    const navbarCollapse = document.getElementById('navbarNav');
+
+    const closeNavbarIfOpen = function() {
+        if (navbarCollapse && navbarCollapse.classList.contains('show')) {
+            const bsCollapse = bootstrap.Collapse.getInstance(navbarCollapse)
+                || new bootstrap.Collapse(navbarCollapse, { toggle: false });
+            bsCollapse.hide();
+        }
+    };
+
+    window.addEventListener('scroll', function() {
+        if (backToTopButton) {
             if (window.pageYOffset > 300) {
                 backToTopButton.classList.add('active');
             } else {
                 backToTopButton.classList.remove('active');
             }
-        });
-    }
+        }
+
+        // Close mobile navbar when the user scrolls
+        closeNavbarIfOpen();
+    }, { passive: true });
 
     // Smooth scrolling for navigation links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -27,11 +40,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     behavior: 'smooth'
                 });
 
-                const navbarCollapse = document.querySelector('.navbar-collapse');
-                if (navbarCollapse && navbarCollapse.classList.contains('show')) {
-                    const bsCollapse = new bootstrap.Collapse(navbarCollapse, { toggle: false });
-                    bsCollapse.hide();
-                }
+                closeNavbarIfOpen();
             }
         });
     });
